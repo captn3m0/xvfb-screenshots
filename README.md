@@ -70,15 +70,15 @@ sudo sysv-rc-conf
 
 At this point, you’ll know if you have it installed or not. If sysv-rc-conf isn’t installed, go ahead and get it. If it is installed, you will see a screen that lists the services running on the far left column and then the characters 1, 2, 3, 4, 5, 0, 6, S running across the first row. These characters refer to the runlevel (sets of modes) in which the computer boots:
 
-Mode | Description
-1 | Single user or “rescue” or “troubleshooting” mode
-2 | Full multi-user mode or “normal use” mode
-3 | Full multi-user mode or “normal use” mode
-4 | Full multi-user mode or “normal use” mode
-5 | Full multi-user mode or “normal use” mode
-0 | System halt mode or the state at which the computer shuts down.
-6 | System Reboot mode
-S | This is a “transition” mode that the system uses when transferring from one mode to another.
+| Mode | Description |
+| 1 | Single user or “rescue” or “troubleshooting” mode |
+| 2 | Full multi-user mode or “normal use” mode |
+| 3 | Full multi-user mode or “normal use” mode |
+| 4 | Full multi-user mode or “normal use” mode |
+| 5 | Full multi-user mode or “normal use” mode |
+| -1 | System halt mode or the state at which the computer shuts down. |
+| 6 | System Reboot mode |
+| S | This is a “transition” mode that the system uses when transferring from one mode to another. |
 
 Make sure that xvfb is checked for modes 2 to 5, normal multi-user mode.
 Also, make the xvfb application is accessible to all with:
@@ -140,28 +140,28 @@ Take Screenshots
 Load some websites inside Firefox running on xvfb. This is the standard command for loading firefox in xvfb with a specified website from a terminal command line:
 
 ```sh
-DISPLAY=:1 firefox http://www.gregorymazurek.com
+DISPLAY=:5 firefox http://www.gregorymazurek.com
 ```
 
 It doesn’t matter what number you use for DISPLAY=:. If you want to use this within Python, PHP, or Ruby, you will have to make adjustments to the code. For example, in Ruby On Rails, you will need to execute the following command instead:
 
 ```sh
-`env DISPLAY=:1 firefox http://www.gregorymazurek.com`
+`env DISPLAY=:5 firefox http://www.gregorymazurek.com`
 ```
 
 Here, the ` tick marks allow you to execute terminal command line code from within Ruby On Rails. The env is added to make the server computer be the environment for the DISPLAY command. And finally, if you decide to run this code within Ruby On Rails, you are going to have to wait until everything is executed before Ruby On Rails can continue executing more code. Abetaday didn’t do this. As soon as a user entered a URL, the server ran through its process while the user went on her way, not having to wait until it was finished. In order to do this, I created a new thread within Ruby On Rails:
 
 ```sh
-Thread.new {`env DISPLAY=:1 firefox http://www.gregorymazurek.com`}
+Thread.new {`env DISPLAY=:5 firefox http://www.gregorymazurek.com`}
 ```
 
 Use Linux comands to generate a screenshot of the website you just loaded. Here, the display number that you used earlier is important because we will refer to it in this standard terminal command line code:
 
 ```sh
-DISPLAY=:1 import -window root -crop 978x597+0+95 -quality 90 /home/folder_to_store_data
+DISPLAY=:5 import -window root -crop 978x597+0+95 -quality 90 /home/folder_to_store_data
 ```
 
-Here, we are calling DISPLAY=:1 and then using Linux’s import tool to capture the window. Then, we are calling “-window root” in order to specify that we are interested in the entire screen. Then, we are cropping the screen to get rid of borders and the firefox header. Then, we set the quality to 90 and finally specify where we would like to store the end result. Now, you have your first screen shot. If you would like to subsequently change the size of the file, use the following command:
+Here, we are calling DISPLAY=:5 and then using Linux’s import tool to capture the window. Then, we are calling “-window root” in order to specify that we are interested in the entire screen. Then, we are cropping the screen to get rid of borders and the firefox header. Then, we set the quality to 90 and finally specify where we would like to store the end result. Now, you have your first screen shot. If you would like to subsequently change the size of the file, use the following command:
 
 ```sh
 convert /home/folder_to_store_data/original.jpg -resize 200x122 /home/folder_to_store_data/resized.jpg
